@@ -1,0 +1,19 @@
+name: SSH detector tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python version
+        run: python3 --version
+      - name: Unit tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Fixture smoke check
+        run: |
+          python3 ssh_detector.py fixtures/synthetic_auth.log --json > /tmp/ssh-alerts.json
+          python3 -c 'import json; f=json.load(open("/tmp/ssh-alerts.json")); assert len(f["alerts"]) == 1'
