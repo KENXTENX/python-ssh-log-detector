@@ -162,7 +162,7 @@ def main(argv: list[str] | None = None) -> int:
     else:
         print(f"SSH-001: {len(records)} failures, {len(alerts)} alerts, {invalid} invalid")
         for a in alerts:
-            print(f"ALERT {a['source_ip']}: {a['failure_count']} failed logins within {window if False else args.window}s")
+            print(f"ALERT {a['source_ip']}: {a['failure_count']} failed logins within {args.window}s")
     return 1 if args.fail_on_alert and alerts else 0
 
 
